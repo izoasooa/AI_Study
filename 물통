@@ -1,0 +1,44 @@
+class WaterJugProblem:
+    def __init__(self, jug1_capacity, jug2_capacity, target_amount):
+        self.jug1_capacity = jug1_capacity
+        self.jug2_capacity = jug2_capacity
+        self.target_amount = target_amount
+
+    def pour_water(self):
+        jug1_amount = 0
+        jug2_amount = 0
+
+        while jug1_amount != self.target_amount:
+            if jug1_amount == 0:
+                # 처음에는 jug1을 가득 채움
+                jug1_amount = self.jug1_capacity
+
+            # jug1에서 jug2로 붓기
+            poured_amount = min(jug1_amount, self.jug2_capacity - jug2_amount)
+            jug1_amount -= poured_amount
+            jug2_amount += poured_amount
+
+            # jug2가 가득 차면 정지
+            if jug2_amount == self.jug2_capacity:
+                break
+
+            # jug1이 비었으면 다시 가득 채우기
+            if jug1_amount == 0:
+                jug1_amount = self.jug1_capacity
+
+        return jug1_amount, jug2_amount
+
+# 물통 용량과 목표 물의 양 설정
+jug1_capacity = 4
+jug2_capacity = 3
+target_amount = 2
+
+# 문제 객체 생성
+problem = WaterJugProblem(jug1_capacity, jug2_capacity, target_amount)
+
+# 물통에 물을 붓는 과정 실행
+jug1_amount, jug2_amount = problem.pour_water()
+
+# 결과 출력
+print("4리터짜리 물통에", jug1_amount, "리터의 물이,")
+print("3리터짜리 물통에", jug2_amount, "리터의 물이 들어있습니다.")
